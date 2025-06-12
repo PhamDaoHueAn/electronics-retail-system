@@ -1,0 +1,33 @@
+﻿@model WebDienMay.Models.ThuongHieu
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("Edit", "AdminThuongHieu", new { id = Model.ThuongHieuID }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TenThuongHieu, "Họ tên")
+        @Html.TextBoxFor(model => model.TenThuongHieu, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.TenThuongHieu, "", new { @class = "text-danger" })
+    </div>
+
+
+
+    <div class="form-group ">
+        @Html.CheckBoxFor(model => model.Active, new { @class = "" })
+        @Html.LabelFor(model => model.Active, "Hoạt động")
+        @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+}
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")}

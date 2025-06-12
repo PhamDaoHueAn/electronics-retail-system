@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_LayoutSearch.cshtml";
+}
+
+@model IEnumerable<WebDienMay.Models.SanPham>
+    @if (Model == null || !Model.Any())
+    {
+    <p>Không tìm thấy kết quả nào cho từ khóa.</p>
+    }
+    else
+    {
+    <div class="row">
+
+        @foreach (var sanpham in Model)
+        {
+        <div class="col-md-6 col-lg-4 col-xl-3">
+            @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post))
+            {
+            <input type="hidden" name="sanpham" value="@sanpham.SanPhamID" />
+            <div class="border border-info rounded position-relative vesitable-item">
+                <div class="vesitable-img">
+                    <a href="/Product/Details?id=@sanpham.SanPhamID"><img src="~/Content/IMG/@sanpham.HinhAnh" class="img-fluid w-100 rounded-top" alt=""></a>
+
+                </div>
+                <div class="text-white bg-info px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">@sanpham.DanhMuc.TenDanhMuc</div>
+                <div class="p-4 pb-0 rounded-bottom">
+                    <h4 style="font-size:17px">@sanpham.TenSanPham</h4>
+                    <div class="d-flex justify-content-between flex-lg-wrap">
+                        <p class="text-dark fw-bold" style="font-size:20px">@string.Format("{0:0,0} VND", @sanpham.Gia)</p>
+                        <button class="btn border border-danger rounded-pill px-3 py-1 mb-4 text-danger"><i class="fa fa-shopping-bag me-2 text-danger"></i> Thêm vào giỏ</button>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+        }
+    </div>
+    }

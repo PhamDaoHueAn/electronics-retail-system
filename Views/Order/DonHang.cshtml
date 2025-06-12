@@ -1,0 +1,147 @@
+﻿@model WebDienMay.Models.OrderVM
+
+@{
+    ViewBag.Title = "DonHang";
+    Layout = "~/Views/Shared/_LayoutKhachHang.cshtml";
+}
+
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <h1 class="mb-4">Đơn hàng</h1>
+        <form action="/Order/DonHang" method="post">
+            <div class="row g-5">
+                <div class="col-md-12 col-lg-6 col-xl-5">
+
+                    <div class="row">
+
+                        <div class="col-md-12 col-lg-6">
+                            <div class="form-item w-100">
+                                <label class="form-label my-3">Tên người nhận hàng<sup>*</sup></label>
+                                @Html.TextBoxFor(m => m.hoten, new { @class = "form-control" })
+                                <small class="text-danger">@Html.ValidationMessageFor(m => m.hoten)</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-item">
+                        <label class="form-label my-3">Địa chỉ nhận hàng <sup>*</sup></label>
+                        @Html.TextBoxFor(m => m.sonha, new { @class = "form-control" })
+                        <small class="text-danger">@Html.ValidationMessageFor(m => m.sonha)</small>
+                    </div>
+                    <div class="form-item">
+                        <label class="form-label my-3">Tỉnh/ thành phố<sup>*</sup></label>
+                        @Html.TextBoxFor(m => m.tp, new { @class = "form-control" })
+                        <small class="text-danger">@Html.ValidationMessageFor(m => m.tp)</small>
+                    </div>
+                    <div class="form-item">
+                        <label class="form-label my-3">Quận/ huyện<sup>*</sup></label>
+                        @Html.TextBoxFor(m => m.quan, new { @class = "form-control" })
+                        <small class="text-danger">@Html.ValidationMessageFor(m => m.quan)</small>
+                    </div>
+
+                    <div class="form-item">
+                        <label class="form-label my-3">SĐT nhận hàng<sup>*</sup></label>
+                        @Html.TextBoxFor(m => m.sdt, new { @class = "form-control" })
+                        <small class="text-danger">@Html.ValidationMessageFor(m => m.sdt)</small>
+                    </div>
+
+
+
+
+                </div>
+                <div class="col-md-12 col-lg-6 col-xl-7">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sản phẩm</th>
+                                    <th scope="col">Tên</th>
+                                    <th scope="col">Đơn giá (VNĐ)</th>
+                                    <th scope="col">SL</th>
+                                    <th scope="col">Tổng (VNĐ)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.giohang != null)
+                                {
+                                    foreach (var item in Model.giohang)
+                                    {
+                                        <tr>
+                                            <th scope="row">
+                                                <div class="d-flex align-items-center mt-2">
+                                                    <img src="~/Content/IMG/@item.SanPham.HinhAnh" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
+                                                </div>
+                                            </th>
+                                            <td class="py-5">@item.SanPham.TenSanPham</td>
+                                            <td class="py-5">@string.Format("{0:0,0} ", item.SanPham.Gia)</td>
+                                            <td class="py-5">@item.SoLuong</td>
+                                            <td class="py-5">@string.Format("{0:0,0}", item.SoLuong * item.SanPham.Gia)</td>
+                                        </tr>
+                                    }
+                                }
+
+                                <tr>
+                                    <th scope="row">
+                                    </th>
+                                    <td class="py-5"></td>
+                                    <td colspan="2" class="py-5">
+                                        <p class="mb-0 text-dark py-3">Tổng tiền sản phẩm</p>
+                                    </td>
+                                    <td class="py-5">
+                                        <div class="py-3 border-bottom border-top">
+                                            <p class="mb-0 text-dark">@string.Format("{0:0,0} VND", Model.giohang.Sum(p => p.SoLuong * p.SanPham.Gia))</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                    </th>
+                                    <td class="py-5">
+                                        <p class="mb-0 text-dark ">Phí ship</p>
+                                    </td>
+                                    <td colspan="3" class="py-5">
+
+
+                                        <div class="form-check text-start">
+                                            <label class="form-check-label" for="Shipping-3">Phí ship: 30.000 VNĐ</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                    </th>
+                                    <td class="py-5">
+                                        <p class="mb-0 text-dark text-uppercase py-3">Tổng</p>
+                                    </td>
+                                    <td class="py-5"></td>
+                                    <td class="py-5"></td>
+                                    <td class="py-5">
+                                        <div class="py-3 border-bottom border-top">
+                                            <p class="mb-0 text-dark">@string.Format("{0:0,0} VND", Model.giohang.Sum(p => p.SoLuong * p.SanPham.Gia)+30000)</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+                    <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
+                        <div class="col-12">
+                            <div class="form-check text-start my-3">
+                                <label class="form-check-label" for="Paypal-1">
+                                    Phương thức thanh toán:
+                                    <p>Thanh toán khi nhận hàng (COD)</p>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-4 text-center align-items-center justify-content-center pt-4">
+                        <button type="submit" class="btn border-danger py-3 px-4 text-uppercase w-100 text-light bg-danger">Đặt hàng</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

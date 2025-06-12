@@ -1,0 +1,69 @@
+﻿@model WebDienMay.Models.SanPham
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("Edit", "AdminProduct", new { id = Model.SanPhamID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TenSanPham,"Tên sản phẩm")
+        @Html.TextBoxFor(model => model.TenSanPham, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.TenSanPham, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Gia,"Giá bán")
+        @Html.TextBoxFor(model => model.Gia, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Gia, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TonKho,"Tồn kho")
+        @Html.TextBoxFor(model => model.TonKho, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.TonKho, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.MoTa,"Mô tả")
+        @Html.TextAreaFor(model => model.MoTa, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DanhMucID, "Danh Mục")
+        @Html.DropDownListFor(model => model.DanhMucID, (SelectList)ViewData["DanhMuc"], "Chọn Danh Mục", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.DanhMucID, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ThuongHieuID, "Thương Hiệu")
+        @Html.DropDownListFor(model => model.ThuongHieuID, (SelectList)ViewData["ThuongHieu"], "Chọn Thương Hiệu", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.ThuongHieuID, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="HinhAnhFile">Hình ảnh</label>
+        <img src="~/Content/IMG/@Model.HinhAnh" width="100px" />
+        <input type="file" name="HinhAnhFile" class="form-control" />
+        @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group ">
+        @Html.CheckBoxFor(model => model.Active,new { @class = "" })
+        @Html.LabelFor(model => model.Active, "Hoạt động")
+        @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+    
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

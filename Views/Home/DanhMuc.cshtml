@@ -1,0 +1,12 @@
+﻿@model IEnumerable<WebDienMay.Models.DanhMuc>
+
+
+<link href="~/Content/css/style2.css" />
+<div class="menu-horizontal">
+    <a href="@Url.Action("HienThiSanPham", "Home")" class="active">Tất Cả Sản Phẩm</a>
+    @foreach (var item in Model)
+    {
+        <a href="/Home/SanPhamTheoDanhMuc/@item.DanhMucID">@item.TenDanhMuc</a>
+    }
+</div>
+

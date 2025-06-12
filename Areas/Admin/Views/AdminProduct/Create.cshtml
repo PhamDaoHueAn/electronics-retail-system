@@ -1,0 +1,69 @@
+﻿@model WebDienMay.Models.SanPham
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("Create", "AdminProduct", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TenSanPham,"Tên sản phẩm")
+        @Html.TextBoxFor(model => model.TenSanPham, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.TenSanPham, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DanhMucID,"Danh mục")
+        @Html.DropDownListFor(model => model.DanhMucID, (SelectList)ViewData["DanhMuc"], "Chọn Danh Mục", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.DanhMucID, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ThuongHieuID,"Thương hiệu")
+        @Html.DropDownListFor(model => model.ThuongHieuID, (SelectList)ViewData["ThuongHieu"], "Chọn Thương Hiệu", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.ThuongHieuID, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Gia,"Giá bán")
+        @Html.TextBoxFor(model => model.Gia, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Gia, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TonKho,"Tồn kho")
+        @Html.TextBoxFor(model => model.TonKho, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.TonKho, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.MoTa,"Mô tả")
+        @Html.TextAreaFor(model => model.MoTa, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CongSuat,"Công suất")
+        @Html.TextBoxFor(model => model.CongSuat, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.CongSuat, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.HinhAnh)
+        <input type="file" name="HinhAnhFile" />
+        @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Lưu sản phẩm</button>
+}
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

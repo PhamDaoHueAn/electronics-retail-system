@@ -1,0 +1,82 @@
+﻿@model IEnumerable<WebDienMay.Models.ChiTietDonHang>
+@using WebDienMay.Models;
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    DonHang dh = ViewBag.DonHang;
+}
+
+
+<div class="container">
+    <h2 class="text-center mb-4">Chi tiết đơn hàng</h2>
+    <h3>Mã đơn hàng: @Model.First().DonHangID</h3>
+    <p><b>Tổng hóa đơn:</b> @string.Format("{0:0,0} VND", Model.Sum(p => p.SoLuong * p.SanPham.Gia) + 30000) (Phí shíp 30.000 VND)</p>
+    <p><b>Phương thức thanh toán:</b> Thanh toán khi nhận hàng (COD)</p>
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Tên sản phẩm</th>
+                            <th scope="col">Giá bán</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Tổng tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th scope="row">
+                                        <div class="d-flex align-items-center">
+                                            <img src="~/Content/IMG/@item.SanPham.HinhAnh" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <p class="mb-0 mt-4">@item.SanPham.TenSanPham</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 mt-4">@string.Format("{0:0,0} VND", @item.SanPham.Gia)</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 mt-4">@item.SoLuong</p>
+
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 mt-4">@string.Format("{0:0,0} VND", item.SanPham.Gia * @item.SoLuong)</p>
+                                    </td>
+
+
+                                </tr>
+                            }
+                        }
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Tổng</td>
+                            <td><p>@string.Format("{0:0,0} VND", Model.Sum(p => p.SoLuong * p.SanPham.Gia))</p></td>
+
+                        </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+            @if (dh.TrangThai == "Đang xử lý")
+            {
+                <a href="@Url.Action("CapNhat", "AdminDonHang", new { id = dh.DonHangID,status="Đang giao" })" class="btn btn-primary btn-sm mx-2" style="float:right">Chuẩn bị xong</a>
+                <a href="@Url.Action("CapNhat", "AdminDonHang", new { id = dh.DonHangID, status = "Đã hủy" })" class="btn btn-primary btn-sm" style="float:right">Hủy</a>
+            }
+            @if (dh.TrangThai == "Đang giao")
+            {
+                <a href="@Url.Action("CapNhat", "AdminDonHang", new { id = dh.DonHangID, status = "Đã giao hàng" })" class="btn btn-success btn-sm" style="float:right">Thanh toán</a>
+            }
+        </div>
+    </div>
+</div>

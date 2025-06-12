@@ -1,0 +1,55 @@
+﻿
+.fruite-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.fruite-img img {
+    object-fit: cover; /* Đảm bảo hình ảnh lấp đầy không gian */
+    height: auto; /* Đặt chiều cao cụ thể */
+    width: 100%;
+}
+
+.col-md-6.col-lg-4.col-xl-3 {
+    flex: 1 1 25%; /* Đảm bảo chia đều không gian */
+    max-width: 25%; /* Giới hạn tối đa 4 vật thể trên mỗi hàng */
+}
+
+.row.g-4 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0px;
+    margin: 0 auto;
+}
+
+.p-4 {
+    flex-grow: 1; /* Cho phần nội dung bên trong card tự lấp đầy */
+}
+
+.fruite-item {
+    display: flex;
+    flex-direction: column; /* Sắp xếp các phần tử theo cột */
+    justify-content: space-between; /* Đẩy nội dung ra hai đầu (hình ảnh ở trên, nút ở dưới) */
+    height: 100%; /* Đảm bảo chiều cao card bằng nhau */
+}
+
+.p-4 {
+    flex-grow: 1; /* Đảm bảo nội dung giữa lấp đầy không gian còn lại */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Giữ khoảng cách đều */
+}
+
+.d-flex.justify-content-between.flex-lg-wrap {
+    margin-top: auto; /* Đẩy khu vực chứa nút xuống cuối */
+    text-align: center;
+}
+
+.btn {
+    margin-top: 10px; /* Khoảng cách với phần phía trên */
+}
+
+
+

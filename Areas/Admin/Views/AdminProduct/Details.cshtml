@@ -1,0 +1,66 @@
+﻿@model WebDienMay.Models.SanPham
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Chi tiết sản phẩm</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover table-responsive-sm">
+                    
+                    <tbody>
+                        <tr>
+                            <th>Mã sản phẩm</th>
+                            <td>@Model.SanPhamID</td>                           
+                        </tr>
+                        <tr>
+                            <th>Tên sản phẩm</th>
+                            <td>@Model.TenSanPham</td>
+                        </tr>
+                        <tr>
+                            <th>Danh mục</th>
+                            <td>@Model.DanhMuc.TenDanhMuc</td>
+                        </tr>
+                        <tr>
+                            <th>Thương hiệu</th>
+                            <td>@Model.ThuongHieu.TenThuongHieu</td>
+                        </tr>
+                        <tr>
+                            <th>Giá bán</th>
+                            <td>@Model.Gia</td>
+                        </tr>
+                        <tr>
+                            <th>Tồn kho</th>
+                            <td>@Model.TonKho</td>
+                        </tr>
+                        <tr>
+                            <th>Mô tả</th>
+                            <td>@Model.MoTa</td>
+                        </tr>
+                        <tr>
+                            <th>Hình Ảnh</th>
+                            <td>
+                                <img src="~/Content/IMG/@Model.HinhAnh"width="70px" />
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+                <a href="/Admin/AdminProduct/Edit?id=@Model.SanPhamID" class="btn btn-warning btn sweet-confirm">Chỉnh sửa</a>
+                <a href="/Admin/AdminProduct/Index" class="btn btn-secondary text-white">Quay lại</a>
+            </div>
+        </div>
+        
+    </div>
+    <!-- /# card -->
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.SanPhamID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

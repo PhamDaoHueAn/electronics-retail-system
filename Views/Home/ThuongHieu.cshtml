@@ -1,0 +1,13 @@
+﻿@model List<WebDienMay.Models.ThuongHieu>
+
+
+
+    <link href="~/Content/css/style2.css" rel="stylesheet" />
+    <div class="menu-horizontal">
+        <a href="@Url.Action(" HienThiSanPham", "Home" )" class="active">Tất Cả Thương Hiệu</a>
+        @foreach (var item in Model)
+        {
+        <a href="/Home/SanPhamTheoThuongHieu/@item.ThuongHieuID">@item.TenThuongHieu</a>
+        }
+    </div>
+

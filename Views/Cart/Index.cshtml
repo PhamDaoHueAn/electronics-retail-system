@@ -1,0 +1,123 @@
+﻿@model IEnumerable<WebDienMay.Models.GioHang>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutKhachHang.cshtml";
+}
+
+<!-- Cart Page Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Sản phẩm</th>
+                        <th scope="col">Tên sản phẩm</th>
+                        <th scope="col">Giá bán</th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Tổng tiền</th>
+                        <th scope="col">Hủy bỏ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <th scope="row">
+                                    <div class="d-flex align-items-center">
+                                        <img src="~/Content/IMG/MG1.jpg" class="img-fluid me-5 rounded-circle"
+                                             style="width: 80px; height: 80px;" alt="">
+                                    </div>
+                                </th>
+                                <td>
+                                    <p class="mb-0 mt-4">@item.SanPham.TenSanPham</p>
+                                </td>
+                                <td>
+                                    <p class="mb-0 mt-4">@string.Format("{0:0,0} VND", @item.SanPham.Gia)</p>
+                                </td>
+                                <td>
+                                    <div class="input-group quantity mt-4" style="width: 100px;">
+                                        <div class="input-group-btn">
+                                            <a href="@Url.Action("Decrease", "Cart", new { sanphamId = item.SanPhamID })"
+                                               class="btn btn-sm btn-minus rounded-circle bg-light border">
+                                                <i class="fa fa-minus"></i>
+                                            </a>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm text-center border-0"
+                                               value="@item.SoLuong" readonly>
+                                        <div class="input-group-btn">
+                                            <a href="@Url.Action("Increase", "Cart", new { sanphamId = item.SanPhamID })"
+                                               class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                                <i class="fa fa-plus"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <p class="mb-0 mt-4">@string.Format("{0:0,0} VND", item.SanPham.Gia * @item.SoLuong)</p>
+                                </td>
+                                <td>
+                                    <a href="/Cart/XoaSP?sanpham=@item.SanPhamID"
+                                       class="btn btn-md rounded-circle bg-light border mt-4">
+                                        <i class="fa fa-times text-danger"></i>
+                                    </a>
+                                </td>
+
+                            </tr>
+                        }
+                    }
+
+
+                </tbody>
+            </table>
+            @if (Model.Count() == 0)
+            {
+                <div style="min-height:90vh">
+                    <h1 class="text-center">Giỏ hàng trống</h1>
+                </div>
+
+            }
+        </div>
+        @if (Model.Count() != 0)
+        {
+            <div class="row g-4 justify-content-end">
+                <div class="col-8"></div>
+                <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
+                    <div class="bg-light rounded">
+                        <div class="p-4">
+                            <h1 class="display-6 mb-4">Tổng <span class="fw-normal"></span></h1>
+                            <div class="d-flex justify-content-between mb-4">
+                                <h5 class="mb-0 me-4">Tiền sản phầm:</h5>
+                                <p class="mb-0">@string.Format("{0:0,0} VND", Model.Sum(p => p.SoLuong * p.SanPham.Gia))</p>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <h5 class="mb-0 me-4">Phí giao hàng</h5>
+                                <div class="">
+                                    <p class="mb-0">30.000 VND</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
+                            <h5 class="mb-0 ps-4 me-4">Tổng</h5>
+                            <p class="mb-0 pe-4">
+                                @string.Format("{0:0,0} VND", Model.Sum(p => p.SoLuong * p.SanPham.Gia) +
+                                       30000)
+                        </p>
+                    </div>
+                    <a href="/Order/DonHang"
+                       class="btn border-danger rounded-pill px-4 py-3 text-light text-uppercase mb-4 ms-4 bg-danger"
+                       type="button">Xác nhận mua hàng</a>
+                </div>
+            </div>
+        </div>
+    }
+
+
+    </div>
+</div>

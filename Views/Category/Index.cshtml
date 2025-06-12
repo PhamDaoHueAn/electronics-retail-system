@@ -1,0 +1,25 @@
+﻿@model IEnumerable<WebDienMay.Models.DanhMucVM>
+
+<div class="mb-4">
+    <h4>Danh mục</h4>
+    <ul class="list-unstyled fruite-categorie">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <li>
+                    <div class="d-flex justify-content-between fruite-name">
+                        <a class="text-info" href="@Url.Action("Trangsanpham", "Home", new { danhmuc = item.MaDanhMuc })">
+                            @item.Tendanhmuc
+                        </a>
+                        <span>(@item.soluong)</span>
+                    </div>
+                </li>
+            }
+        }
+        else
+        {
+            <li><span class="text-muted">Không có danh mục nào</span></li>
+        }
+    </ul>
+</div>

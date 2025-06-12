@@ -1,0 +1,78 @@
+﻿@model WebDienMay.Models.ProfileViewModel
+@*<link href="~/Content/style/style.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/bootstrap/css/bootstrap.min.css" rel="stylesheet" /*@>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutKhachHang.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Thông Tin Cá Nhân</h2>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title"><strong>Họ và Tên:</strong> @Model.TaiKhoan.HoTen</h5>
+            <p class="card-text"><strong>Email:</strong> @Model.TaiKhoan.Email</p>
+            <p class="card-text"><strong>Số Điện Thoại:</strong> @Model.TaiKhoan.SoDienThoai</p>
+            <p class="card-text"><strong>Địa Chỉ:</strong> @Model.TaiKhoan.DiaChi</p>
+        </div>
+    </div>
+
+    <h2 class="text-center mb-4">Đơn Hàng Của Bạn</h2>
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Ngày Đặt</th>
+                            <th>Trạng Thái</th>
+                            <th>Tổng Tiền</th>
+                            <th>Địa Chỉ Giao</th>
+                            <th>Chi Tiết</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.DonHangs == null || !Model.DonHangs.Any())
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center"><strong>Bạn chưa có đơn hàng nào.</strong></td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var donHang in Model.DonHangs)
+                            {
+                                <tr>
+                                    <td>@donHang.NgayDat</td>
+                                    @if (donHang.TrangThai == "Đã hủy")
+                                    {
+                                        <td class="text-danger">@donHang.TrangThai</td>
+
+                                    }
+                                    else if (donHang.TrangThai == "Đã giao hàng")
+                                    {
+                                        <td class="text-success">@donHang.TrangThai</td>
+
+                                    }
+                                    else
+                                    {
+                                        <td>@donHang.TrangThai</td>
+                                    }
+                                    <td>@string.Format("{0:0,0} VND", donHang.TongTien)</td>
+                                    <td>@donHang.DiaChiGiao</td>
+                                    <td>
+                                        <a href="@Url.Action("OrderDetails", "Order", new { id = donHang.DonHangID })" class="btn btn-info btn-sm">Xem Chi Tiết</a>
+                                        @if(donHang.TrangThai == "Đang xử lý")
+                                        {
+                                            <a href="@Url.Action("Huy", "Order", new { id = donHang.DonHangID })" class="btn btn-danger btn-sm">Hủy</a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

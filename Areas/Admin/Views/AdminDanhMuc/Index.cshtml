@@ -1,0 +1,59 @@
+﻿@model IEnumerable<WebDienMay.Models.DanhMuc>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-lg-12">
+    <a href="/Admin/AdminDanhMuc/Create" class="btn btn-secondary mb-2">Thêm danh mục</a>
+    <div class="card">
+        <div class="card-header">
+            <h3 style="width: 200px; margin-right: 350px" class="card-title">Danh sách danh mục</h3>
+        </div>
+        <div class="card-body">
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="thead-primary">
+                        <tr>
+                            <th scope="col">Mã</th>
+                            <th scope="col">Tên danh mục</th>
+                            <th scope="col">Trạng thái</th>
+                            <th scope="col">#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <th>@item.DanhMucID</th>
+                                <td>@item.TenDanhMuc</td>
+                                
+                                <td>
+                                    @if (item.Active == true)
+                                    {
+                                        <div><i class="fa-solid fa-circle" style="color:  #82da5d; font-size:10px"></i> Hoạt dộng</div>
+                                    }
+                                    else
+                                    {
+                                        <div><i class="fa-solid fa-circle" style="color: #f50000;font-size:10px"></i> Bị khóa</div>
+
+                                    }
+                                </td>
+
+                                <td>
+                                    <a href="/Admin/AdminDanhMuc/Edit?id=@item.DanhMucID" class="btn btn-warning text-dark">Sửa</a>
+                                    <a href="/Admin/AdminDanhMuc/Delete?id=@item.DanhMucID" class="btn btn-danger text-white">Xóa</a>
+                                </td>
+                            </tr>
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
