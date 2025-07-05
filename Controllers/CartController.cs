@@ -28,7 +28,7 @@ namespace WebDienMay.Controllers
             {
                 // Lưu thông tin để quay lại sau khi đăng nhập
                 Session["ReturnUrl"] = "/Cart/AddToCart";
-                Session["ReturnUrlAddToCart"] = Request.UrlReferrer?.ToString(); // Quay lại trang sản phẩm
+                Session["ReturnUrlDT"] = Request.UrlReferrer?.ToString(); // Quay lại trang sản phẩm
                 TempData["ErrorMessage"] = "Bạn cần đăng nhập để thêm vào giỏ hàng.";
                 return RedirectToAction("DangNhap", "Login");
             }
