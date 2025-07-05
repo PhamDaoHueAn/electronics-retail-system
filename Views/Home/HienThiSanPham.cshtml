@@ -54,11 +54,11 @@
         <div class="row g-4">
             @foreach (var sp in Model)
             {
-                <div class="col-md-6 col-lg-4 col-xl-3">
+                <div class="col-md-6 col-lg-4 col-xl-3 d-flex">
                     @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post))
                     {
                         <input type="hidden" name="sanphamId" value="@sp.SanPhamID" />
-                        <div class="border border-info rounded vesitable-item">
+                        <div class="border border-info rounded vesitable-item h-100 d-flex flex-column">
                             <div class="vesitable-img">
                                 <a href="/Product/Details?id=@sp.SanPhamID">
                                     <img src="~/Content/IMG/@sp.HinhAnh" class="img-fluid w-100 rounded-top" alt="@sp.TenSanPham" />
@@ -69,7 +69,7 @@
                                 <h4>@sp.TenSanPham</h4>
                                 <div class="d-flex justify-content-between flex-wrap">
                                     <p class="text-dark fs-5 fw-bold">@string.Format("{0:0,0} VND", sp.Gia)</p>
-                                    <button class="btn border border-danger rounded-pill px-3 py-1 mb-4 text-danger">
+                                    <button class="btn border border-danger rounded-pill px-3 py-1 mb-4 mt-auto text-danger">
                                         <i class="fa fa-shopping-bag me-2 text-danger"></i> Thêm vào giỏ
                                     </button>
                                 </div>

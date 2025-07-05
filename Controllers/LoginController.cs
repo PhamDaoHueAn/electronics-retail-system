@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using WebDienMay.Models;
+using BCrypt.Net;
+using System;
 
 namespace WebDienMay.Controllers
 {
@@ -31,6 +33,9 @@ namespace WebDienMay.Controllers
                 }
 
                 taiKhoan.VaiTro = "Khách hàng";
+                taiKhoan.Active = true;
+                taiKhoan.NgayTao = DateTime.Now;
+                taiKhoan.MatKhau = BCrypt.Net.BCrypt.HashPassword(taiKhoan.MatKhau);
                 db.TaiKhoans.InsertOnSubmit(taiKhoan);
                 db.SubmitChanges();
 
@@ -59,8 +64,8 @@ namespace WebDienMay.Controllers
             if (!ModelState.IsValid)
                 return View(taiKhoan);
 
-            var user = db.TaiKhoans.FirstOrDefault(u => u.Email == taiKhoan.Email && u.MatKhau == taiKhoan.MatKhau);
-            if (user != null)
+            var user = db.TaiKhoans.FirstOrDefault(u => u.Email == taiKhoan.Email);
+            if (user != null && BCrypt.Net.BCrypt.Verify(taiKhoan.MatKhau, user.MatKhau))
             {
                 if (!user.Active)
                 {
@@ -71,6 +76,7 @@ namespace WebDienMay.Controllers
                 // Lưu thông tin người dùng vào session
                 Session["UserEmail"] = user.Email;
                 Session["TaiKhoanID"] = user.TaiKhoanID;
+                Session["VaiTro"] = user.VaiTro;
 
                 var returnUrl = Session["ReturnUrl"] as string;
                 if (!string.IsNullOrEmpty(returnUrl))
